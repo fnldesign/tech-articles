@@ -45,7 +45,7 @@ Para conhecer melhor sobre o docker:
 - [Visão Geral do Docker](https://www.docker.com/what-docker)
 - [Documentação Oficial do docker](https://docs.docker.com/)
 - [Docker na Amazon](https://aws.amazon.com/docker/)
-- [Referneica de Comandos Básicos](https://docs.docker.com/engine/reference/commandline/docker/)
+- [Referência de Comandos Básicos](https://docs.docker.com/engine/reference/commandline/docker/)
 
 ## HandOn - Mão na massa
 Dada essa pequena introdução vamos a parte prática. Vamos baixar, iniciar e executar um container docker com uma imagem do Kafka, distribuição do Spotfy.
@@ -59,12 +59,26 @@ Os comandos abaixo irão baixar e executar um container com o Kafka e Zookeeper,
 docker pull spotify/kafka
 docker run -d -p 2181:2181 -p 9092:9092 --env ADVERTISED_HOST=kafka --env ADVERTISED_PORT=9092 --name kafka spotify/kafka
 ```
+#### Vamos a explicação dos comandos
 
-O primiero comando baixa a imagem do container Kafka do Soptfy, enquanto o segundo executa o container em background ```opção -d```. Já as opções ```-p``` definem um mapeamento entre as portas internas do container e as externas do sistema operacional host, ```-env``` definem os valors para vária´ves de ambiente e ```-name``` define o nome do host do container, depois precisamos adicionar esse host name no arquivo host local para que possa ser enxergado pelo host e pelos demais processos e containers.
+O primiero comando (```docker pull spotify/kafka```) baixa a imagem do container Kafka do Spotfy, enquanto o segundo comando (```docker run```) executa o container em background ```opção -d```. 
+Já as opções ```-p``` definem um mapeamento entre as portas internas do container e as externas do sistema operacional host, ```-env``` definem os valors para váriáveis de ambiente e ```-name``` define o nome do host do container, depois precisamos adicionar esse host name no arquivo host local para que possa ser enxergado pelo host e pelos demais processos e containers. Vamos colocar tudo em pé e depois veja como fazer isso na sessão [Ajustando as variáveis de ambiente](./ddd).
 
-[Por que estamos utilizando a distribuição Spotify?](https://github.com/spotify/docker-kafka#why)
+`ADVERTISTED_HOST` foi configurado para `kafka`, essa configuração permitirá que outros containers rodar Producers and Consumers.
 
-### Criando um topico
+Configurando `ADVERTISED_HOST` para `localhost`, `127.0.0.1`, ou `0.0.0.0` irá trabalhar bem somente se os Producers e Consumers forem iniciados dentro do container `kafka`, ou se você estiver DockerForMac ou DockerForWindows (como eu) e voce quiser rodar os Producers e Consumers do OSX ou Windows. 
+
+Mesmo assim você deve mapear o hostname do container a um ip externo ha maquina host, conforme explicado na sessão [Ajustando as variáveis de ambiente](./ddd). 
+
+No entanto, esses casos de uso de executar com `localhost` são bem menos interessantes, por isso vamos iniciar Produtores e Consumidores de outros containers.
+
+Em um ambiente produtivo não devemos utilizar localhost, mas sim criar uma rede com o docker isso também será explicado mais a frente na sessão [Configurando uma rede para o docker](./ddd).
+
+Precisamos usar um endereço IP ou nome de host para que o serviço `kafka` seja acessado de outro container. O endereço IP não é conhecido antes do início do contêiner, portanto, temos que escolher um nome de host e eu escolhi o `kafka` neste exemplo.
+
+[Por que estou utilizando a distribuição Spotify?](https://github.com/spotify/docker-kafka#why)
+
+### Criando um tópico
 ```
 docker exec kafka /opt/kafka_2.11-0.10.1.0/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
 ```
@@ -85,8 +99,3 @@ saida:
 ```
 test
 ```
-
-
-
-
-  
