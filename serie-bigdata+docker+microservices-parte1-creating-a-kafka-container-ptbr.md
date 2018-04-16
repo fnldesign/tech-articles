@@ -29,7 +29,7 @@ Ele está dividido basicamente nos seguintes blocos ou APIs:
 - Conectores: permite criar e executar producers ou consumers reutilizáveis que conectam tópicos Kfaka a uma ou mais aplicações;
 
 ### API´s do Kafka
-![API´s do Kafka](https://github.com/fnldesign/tech-articles/00-kafka-apis.png)
+![API´s do Kafka](https://github.com/fnldesign/tech-articles/blob/series-bigdata-docker-microservices/00-kafka-apis.png)
 
    
 Para quem deseja conhecer um pouco melhor o Kafka coloco abaixo duas referências sobre o mesmo:
@@ -161,12 +161,12 @@ Enquanto isso estude as opções de linha de comando do docker, bem como estude 
 Dando uma amostra aqui desses recursos indispensáveis e muito importantes do Kafka coloco a imagem abaixo para termos uma ídéia de como o Kafka é poderoso, resiliente e escalável.
 
 #### Anatomia de um Tópico
-![Anatomia de um Tópico](https://github.com/fnldesign/tech-articles/01-anatomy-of-a-topic.png)
+![Anatomia de um Tópico](https://github.com/fnldesign/tech-articles/blob/series-bigdata-docker-microservices/01-anatomy-of-a-topic.png)
 
 #### Group ID
-![Group Id](https://github.com/fnldesign/tech-articles/02-consumer-groups.png)
+![Group Id](https://github.com/fnldesign/tech-articles/blob/series-bigdata-docker-microservices/02-consumer-groups.png)
 
-Esses recursos podem ser estudados mais a fundo na [Introdução do Kafka] (https://kafka.apache.org/intro).
+Esses recursos podem ser estudados mais a fundo na [Introdução do Kafka](https://kafka.apache.org/intro).
 
 Até o próximo artigo!!
 
