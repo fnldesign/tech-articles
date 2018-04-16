@@ -61,14 +61,17 @@ docker run -d -p 2181:2181 -p 9092:9092 --env ADVERTISED_HOST=kafka --env ADVERT
 ```
 #### Vamos a explicação dos comandos
 
-O primiero comando (```docker pull spotify/kafka```) baixa a imagem do container Kafka do Spotfy, enquanto o segundo comando (```docker run```) executa o container em background ```opção -d```. 
-Já as opções ```-p``` definem um mapeamento entre as portas internas do container e as externas do sistema operacional host, ```-env``` definem os valors para váriáveis de ambiente e ```-name``` define o nome do host do container, depois precisamos adicionar esse host name no arquivo host local para que possa ser enxergado pelo host e pelos demais processos e containers. Vamos colocar tudo em pé e depois veja como fazer isso na sessão [Ajustando as variáveis de ambiente](./ddd).
+O primiero comando (```docker pull spotify/kafka```) baixa a imagem do container Kafka do Spotfy, enquanto o segundo comando (```docker run```) executa o container em background ```opção -d```.
 
-`ADVERTISTED_HOST` foi configurado para `kafka`, essa configuração permitirá que outros containers rodar Producers and Consumers.
+Já as opções ```-p``` definem um mapeamento entre as portas internas do container e as externas do sistema operacional host, ```-env``` definem os valors para váriáveis de ambiente e ```-name``` define o nome do host do container, depois precisamos adicionar esse host name no arquivo host local para que possa ser enxergado pelo host e pelos demais processos e containers. 
 
-Configurando `ADVERTISED_HOST` para `localhost`, `127.0.0.1`, ou `0.0.0.0` irá trabalhar bem somente se os Producers e Consumers forem iniciados dentro do container `kafka`, ou se você estiver DockerForMac ou DockerForWindows (como eu) e voce quiser rodar os Producers e Consumers do OSX ou Windows. 
+Vamos colocar tudo em pé e depois veja como fazer isso na sessão [Ajustando as variáveis de ambiente](./ddd).
 
-Mesmo assim você deve mapear o hostname do container a um ip externo ha maquina host, conforme explicado na sessão [Ajustando as variáveis de ambiente](./ddd). 
+`ADVERTISTED_HOST` foi configurado como `kafka`, essa configuração permitirá que outros containers executem os Producers and Consumers de maneira separada e independente.
+
+Configurando `ADVERTISED_HOST` para `localhost`, `127.0.0.1`, ou `0.0.0.0` irá trabalhar bem somente se os Producers e Consumers forem iniciados dentro do container `kafka`, ou se você estiver utilizando o DockerForMac ou DockerForWindows (como eu) e voce quiser rodar os Producers e Consumers do OSX ou Windows respectivamente. 
+
+Mesmo assim você deve mapear o hostname do container a um ip externo ha maquina host, conforme explicado na sessão [Ajustando as variáveis de ambiente](./ddd). Caso contrário ao executar os Producres e Consumers mais a frente você receberá uma erro de `kafka.common.LeaderNotAvailableException` 
 
 No entanto, esses casos de uso de executar com `localhost` são bem menos interessantes, por isso vamos iniciar Produtores e Consumidores de outros containers.
 
